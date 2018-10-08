@@ -7,6 +7,8 @@
 #ifndef CLASSIFICATION_H
 #define CLASSIFICATION_H
 
+//includes the libraries used in 
+//classification function.
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
