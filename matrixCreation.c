@@ -9,26 +9,35 @@
 
 struct TransitionMatrix matrixCreation( FILE* fp){
 
-    char * ptr, buf[256]; // character pointer and buffer
+    char* ptr, buf[256]; // character pointer and buffer
+    char* wordptr;
 
     // ints to represent values in tm to be created
     int states;
     int start;
     int accept;
 
+    char* stat = "states";
+    char* st = "start";
+    char* ac = "accept";
     //reads tm files first three lines to find the states, start, and accept numbers
     for(int i = 0; i < 3; i++){
-        if( (ptr = fgets(buf,256, fp)) != NULL) // checks that there is a word to pull and that it fits in buffer
-            ptr = strtok(ptr, " "); // pulls word from the files first three lines
-        ptr = strtok(NULL, "\n"); // replaces found word with associated value
+        //Pulls line from file pointer
+        if( (ptr = fgets(buf,256, fp)) != NULL)
+            wordptr = strtok(ptr, " "); // pulls word from the files first three lines
+        ptr = strtok(NULL, "\n"); // pulls number from line and removes trailing new line
         // converts char numbers to their integer values and initializes respective variables
         int a = atoi(ptr);
-        if(i == 0)
+        if(i == 0 && strstr(wordptr, stat)){
             states = a;
-        if(i == 1)
+	} else if(i == 1 && strstr(wordptr, st)){
             start = a;
-        if(i == 2)
+	} else if(i == 2 && strstr(wordptr, ac)){
             accept = a;
+	} else{
+	    tm tmat = {-1, -1, -1, {{0}}};
+	    return tmat;
+	}
     }
 
     //initializes instance of TransitionMatrix structure with all NULL values in matrix cells

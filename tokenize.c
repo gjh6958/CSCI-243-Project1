@@ -1,4 +1,4 @@
-/* 
+/*
  * Author - Grayson Hassell
  * The Mechanics of Programming Project 1
  * Lexical Analysis
@@ -20,8 +20,9 @@
 int main(int argc, char * argv[]){
     
     //checks to see if there is a tm file present
-    if(argc != 2){
-        printf("usage: ./tokenize tmfile\n");
+    //quits if one can't be found
+    if( argc != 2 ){
+        fprintf(stderr, "usage: ./tokenize tmfile\n");
         return 0;
     }
 
@@ -37,6 +38,12 @@ int main(int argc, char * argv[]){
     //creates the transition matrix
     tm tmat = matrixCreation(fp);
     
+    //checks that matrix creation found valid tm file contents
+    if(tmat.states < 0){
+	fprintf(stderr, "usage ./tokenize tmfile\n");
+	return 0;
+    }
+
     //Scans for tokens one at a time and frees their heap
     //memory allocations
     char* token;
